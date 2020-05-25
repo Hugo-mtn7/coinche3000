@@ -1,4 +1,4 @@
-package com.coinche.Coinche3000;
+package com.coinche.Coinche3000.object;
 
 import org.springframework.stereotype.Component;
 

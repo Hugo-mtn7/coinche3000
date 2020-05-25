@@ -1,7 +1,9 @@
-package com.coinche.Coinche3000;
+package com.coinche.Coinche3000.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.coinche.Coinche3000.object.CardDeck;
 
 
 @RestController
