@@ -1,28 +1,25 @@
 package com.coinche.Coinche3000.controller;
 
-import java.util.ArrayList;
-
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.coinche.Coinche3000.Constants;
-import com.coinche.Coinche3000.object.Game;
 import com.coinche.Coinche3000.object.Player;
+import com.coinche.Coinche3000.service.GameService;
 
 @RestController
 public class MainController {
 
-	@RequestMapping("/create-new-game")
-	public String createNewGame() {
+	@Autowired
+	GameService gameService;
+	
+	@PostMapping("/create-new-game/{scoringLimit}")
+	public int createNewGame(@PathVariable Integer scoringLimit, @RequestBody Player p1 ) {
 		
-		ArrayList<Player> players = new ArrayList<Player>();
-		players.add(new Player("Soso",Constants.TEAM1));
-		players.add(new Player("Pierre",Constants.TEAM2));
-		players.add(new Player("Scott",Constants.TEAM1));
-		players.add(new Player("Quinty",Constants.TEAM2));
-		
-		Game game = new Game(players,1500);
-		game.displayPlayers();
-		return "nouveau jeu créé";
+		int id =  gameService.createGame(p1, scoringLimit);
+		gameService.displayGame();
+		return id;
 	}
 }
