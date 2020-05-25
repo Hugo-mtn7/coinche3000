@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Player {
-	private int code;
+	private int id;
 	private String pseudo;
 	private int team;
 	private ArrayList<Card> hand;
@@ -13,17 +13,20 @@ public class Player {
 	public Player(String pseudo, int team) {
 		Random rand = new Random();
 		
-		setCode(rand.nextInt(9999999));
+		setId(rand.nextInt(9999999));
 		setPseudo(pseudo);
 		setTeam(team);
 	}
 	
-	public int getCode() {
-		return code;
+	public void displayPlayer() {
+		System.out.println(this.getPseudo() + ", team " + this.getTeam() + " (id : " + this.getId() + ")");
+	}
+	public int getId() {
+		return id;
 	}
 
-	public void setCode(int code) {
-		this.code = code;
+	public void setId(int code) {
+		this.id = code;
 	}
 
 	public String getPseudo() {

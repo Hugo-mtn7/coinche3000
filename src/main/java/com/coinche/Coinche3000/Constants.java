@@ -12,4 +12,6 @@ public final class Constants {
 	 public static final String KING = "K";
 	 public static final String ACE = "A";
 	 
+	 public static final int TEAM1 = 1;
+	 public static final int TEAM2 = 2;
 }
