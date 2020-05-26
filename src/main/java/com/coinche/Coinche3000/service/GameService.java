@@ -7,10 +7,10 @@ import java.util.Optional;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.coinche.Coinche3000.Constants;
+import com.coinche.Coinche3000.exception.NotFoundException;
 import com.coinche.Coinche3000.object.Game;
 import com.coinche.Coinche3000.object.Player;
 import com.coinche.Coinche3000.repository.GameRepository;
@@ -48,7 +48,7 @@ public class GameService {
 			return gameToJoin;
 		}
 		else
-			throw new NotFoundException();
+			throw new NotFoundException("Game id not found");
 		
 	}
 	
