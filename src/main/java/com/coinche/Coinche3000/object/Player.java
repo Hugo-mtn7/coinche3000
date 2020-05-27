@@ -1,8 +1,12 @@
 package com.coinche.Coinche3000.object;
 
+import java.util.ArrayList;
+
 public class Player {
 	private String pseudo;
 	private int team;
+	private int position;
+	private ArrayList<Card> hand;
 	
 	public Player(String pseudo, int team) {
 		setPseudo(pseudo);
@@ -24,6 +28,22 @@ public class Player {
 	}
 	public void setTeam(int team) {
 		this.team = team;
+	}
+
+	public int getPosition() {
+		return position;
+	}
+
+	public void setPosition(int position) {
+		this.position = position;
+	}
+
+	public ArrayList<Card> getHand() {
+		return hand;
+	}
+
+	public void setHand(ArrayList<Card> hand) {
+		this.hand = hand;
 	}
 
 	

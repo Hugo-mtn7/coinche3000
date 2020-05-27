@@ -10,8 +10,10 @@ public class Game {
 	@Id
 	private String id;
 	private ArrayList<Player> players;
+	private ArrayList<Round> rounds;
 	private int scoringLimit;
 	private int currentDealerPosition;
+	private int currentRoundNumber;
 	
 	
 	public String getId() {
@@ -44,5 +46,21 @@ public class Game {
 
 	public void setCurrentDealerPosition(int currentDealerPosition) {
 		this.currentDealerPosition = currentDealerPosition;
+	}
+
+	public ArrayList<Round> getRounds() {
+		return rounds;
+	}
+
+	public void setRounds(ArrayList<Round> rounds) {
+		this.rounds = rounds;
+	}
+
+	public int getCurrentRoundNumber() {
+		return currentRoundNumber;
+	}
+
+	public void setCurrentRoundNumber(int currentRoundNumber) {
+		this.currentRoundNumber = currentRoundNumber;
 	}
 }

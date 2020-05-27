@@ -38,8 +38,26 @@ public class GameController {
 		} catch (NotFoundException e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
-			throw new ResponseStatusException(
-	           HttpStatus.NOT_FOUND, "Game not found", e);
+			ResponseStatusException ex = new ResponseStatusException(
+			           HttpStatus.NOT_FOUND, "Game not found", e);
+			throw ex;
+//			throw new ResponseStatusException(
+//	           HttpStatus.NOT_FOUND, "Game not found", e);
+		}
+	}
+	@GetMapping("/start/{gameId}")
+	public Game startGame(@PathVariable Integer gameId) {
+		
+		try {
+			return gameService.startGame(gameId);
+		} catch (NotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
 		}
 	}
 	
