@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Round {
 	private Integer roundNumber;
-	private Integer bet;
+	private Bet bet;
 	private String trump;
 	private ArrayList<Card> team1CardsWon;
 	private ArrayList<Card> team2CardsWon;
@@ -15,10 +15,10 @@ public class Round {
 	public void setRoundNumber(Integer roundNumber) {
 		this.roundNumber = roundNumber;
 	}
-	public Integer getBet() {
+	public Bet getBet() {
 		return bet;
 	}
-	public void setBet(Integer bet) {
+	public void setBet(Bet bet) {
 		this.bet = bet;
 	}
 	public String getTrump() {

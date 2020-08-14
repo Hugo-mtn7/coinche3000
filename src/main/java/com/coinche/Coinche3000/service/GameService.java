@@ -35,6 +35,7 @@ public class GameService {
 		newGame.setScoringLimit(scoringLimit);
 		newGame.setCurrentDealerPosition(1);
 		newGame.setCurrentRoundNumber(0);
+		newGame.setPassCounter(0);
 		
 		gameRepository.save(newGame);
 		
@@ -65,6 +66,7 @@ public class GameService {
 				setPlayersPositions(gameToStart);
 				gameToStart.setRounds(new ArrayList<Round>(
 						Arrays.asList(roundService.startRound(gameToStart)))); 
+				gameToStart.setCurrentPlayer(getPlayerPseudoFromPosition(gameToStart,2));
 				gameRepository.save(gameToStart);
 				return gameToStart;
 			}
@@ -73,6 +75,20 @@ public class GameService {
 		}
 		else
 			throw new NotFoundException("id not found");
+	}
+	
+	public Game getGameById(Integer gameId) throws NotFoundException, Exception {
+		Optional<Game> optionalGame = gameRepository.findById(Integer.toString(gameId));
+		if(optionalGame.isPresent())
+			return optionalGame.get();
+		else
+			throw new NotFoundException("id not found");
+	}
+	
+	public Boolean saveGame(Game game) {
+		gameRepository.save(game);
+		return true;
+		
 	}
 	
 	public Boolean isGameReady(Game game){
@@ -141,6 +157,33 @@ public class GameService {
 	public List<Game> getAll() {
 		
 		return gameRepository.findAll();	
+	}
+	
+	public String getPlayerPseudoFromPosition(Game game, Integer position) {
+		for(Player player : game.getPlayers()){
+			if(player.getPosition() == position)
+				return player.getPseudo();
+		}
+		return null;
+	}
+	
+	public String getNextPlayerPseudo(Game game) {
+		Integer currentPosition = null;
+		for(Player player : game.getPlayers()){
+			if(player.getPseudo().equals(game.getCurrentPlayer()))
+				currentPosition = player.getPosition();
+		}
+		
+		Integer nextPosition = 1;
+		if(null != currentPosition)
+			nextPosition = CommonService.getNextPosition(currentPosition);
+		
+		for(Player player : game.getPlayers()){
+			if(player.getPosition() == nextPosition)
+				return player.getPseudo();
+		}
+		
+		return null;
 	}
 
 //	public void displayGame() {

@@ -14,7 +14,8 @@ public class Game {
 	private int scoringLimit;
 	private int currentDealerPosition;
 	private int currentRoundNumber;
-	
+	private String currentPlayer;
+	private int passCounter;
 	
 	public String getId() {
 		return id;
@@ -63,4 +64,23 @@ public class Game {
 	public void setCurrentRoundNumber(int currentRoundNumber) {
 		this.currentRoundNumber = currentRoundNumber;
 	}
+
+	public String getCurrentPlayer() {
+		return currentPlayer;
+	}
+
+	public void setCurrentPlayer(String currentPlayer) {
+		this.currentPlayer = currentPlayer;
+	}
+
+	public int getPassCounter() {
+		return passCounter;
+	}
+
+	public void setPassCounter(int passCounter) {
+		this.passCounter = passCounter;
+	}
+
+
+
 }

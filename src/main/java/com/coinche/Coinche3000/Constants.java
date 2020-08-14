@@ -14,4 +14,7 @@ public final class Constants {
 	 
 	 public static final int TEAM1 = 1;
 	 public static final int TEAM2 = 2;
+	 
+	 public static final int PASS = 0;
+	 public static final int[] VALID_BET_VALUE = {PASS,80,90,100,110,120,130,140,150};
 }

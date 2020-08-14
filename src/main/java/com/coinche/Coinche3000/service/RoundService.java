@@ -18,8 +18,6 @@ public class RoundService {
 		cardDeck.shuffle();
 		cardDeck.distribute(game.getCurrentDealerPosition(), game.getPlayers());
 		
-		return round;
-		
-		
+		return round;	
 	}
 }

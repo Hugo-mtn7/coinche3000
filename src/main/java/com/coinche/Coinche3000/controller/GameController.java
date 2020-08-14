@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,6 +25,7 @@ public class GameController {
 	@Autowired
 	GameService gameService;
 	
+	@CrossOrigin
 	@PostMapping("/create-new/{scoringLimit}")
 	public Game createNewGame(@PathVariable Integer scoringLimit, @RequestBody Player p1 ) {
 		
@@ -65,5 +67,12 @@ public class GameController {
 	public List<Game> getAll() {
 			
 		return gameService.getAll();
+	}
+	
+	@CrossOrigin
+	@GetMapping("/test")
+	public String test() {
+			
+		return "Welcome to the game controller";
 	}
 }
