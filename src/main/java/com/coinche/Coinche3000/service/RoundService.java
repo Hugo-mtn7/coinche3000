@@ -18,6 +18,7 @@ public class RoundService {
 		cardDeck.shuffle();
 		cardDeck.distribute(game.getCurrentDealerPosition(), game.getPlayers());
 		
+		game.setIsBetTurnOver(false);
 		return round;	
 	}
 }

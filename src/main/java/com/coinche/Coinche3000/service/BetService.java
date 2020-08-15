@@ -26,41 +26,66 @@ public class BetService {
 	public Game placeBet(int gameId, Bet bet) throws NotFoundException, Exception {
 
 		Game game = gameService.getGameById(gameId);
-		if(bet.getPseudo().equals(game.getCurrentPlayer())) {
-			if(isBetValid(game, bet)) {
-				if(bet.getValue() == Constants.PASS) {
-					//TODO manage end of bet
-					game.setPassCounter(game.getPassCounter() + 1);
-				}
-				else
-				{
-					for(Round round : game.getRounds()){
-						if(round.getRoundNumber() == game.getCurrentRoundNumber())
-							round.setBet(bet);
+		if(game.getIsBetTurnOver() == false) {
+
+			if(bet.getPseudo().equals(game.getCurrentPlayer())) {
+				Bet currentBet = getCurrentBet(game);
+				if(isBetValid(game, bet, currentBet)) {
+					if(bet.getValue() == Constants.PASS) {
+						if(isLastBet(game, currentBet)) {
+							//End bet turn
+							game.setIsBetTurnOver(true);
+							game.setPassCounter(0);
+							game.setCurrentPlayer(gameService.getPlayerPseudoFromPosition(
+									game, CommonService.getNextPosition(game.getCurrentDealerPosition())));
+							gameService.saveGame(game);
+							return game;
+						}
+						else
+							game.setPassCounter(game.getPassCounter() + 1);
 					}
-					game.setPassCounter(0);
+					else
+					{
+						for(Round round : game.getRounds()){
+							if(round.getRoundNumber() == game.getCurrentRoundNumber())
+								round.setBet(bet);
+						}
+						game.setPassCounter(0);
+					}
+					game.setCurrentPlayer(gameService.getNextPlayerPseudo(game));
+					gameService.saveGame(game);
+					return game;
 				}
-				game.setCurrentPlayer(gameService.getNextPlayerPseudo(game));
-				gameService.saveGame(game);
-				return game;
+				else{
+					throw new Exception("Bet isn't above last player bet");
+				}		
 			}
-			else{
-				throw new Exception("Bet isn't above last player bet");
-			}		
+			else {
+				throw new Exception("Not your turn to bet !");
+			}
 		}
 		else {
-			throw new Exception("Not your turn to bet !");
+			throw new Exception("Bets are over !");
 		}
 			
 	}
 	
-	public Boolean isBetValid(Game game, Bet bet) {
-		Bet currentBet = getCurrentBet(game);
+	public Boolean isBetValid(Game game, Bet bet, Bet currentBet) {
 		
 		if((null == currentBet && game.getPassCounter() < 4)
 			|| ((bet.getValue() > currentBet.getValue() || bet.getValue() == Constants.PASS)
 			&& IntStream.of(Constants.VALID_BET_VALUE).anyMatch(x -> x == bet.getValue())
 			&& game.getPassCounter() < 3))
+			return true;
+		else
+			return false;
+		
+	}
+	
+	public Boolean isLastBet(Game game, Bet currentBet) {
+		
+		if((null == currentBet && game.getPassCounter() >= 3)
+			|| (null != currentBet && game.getPassCounter() >= 2))
 			return true;
 		else
 			return false;

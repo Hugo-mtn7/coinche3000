@@ -16,6 +16,7 @@ public class Game {
 	private int currentRoundNumber;
 	private String currentPlayer;
 	private int passCounter;
+	private Boolean isBetTurnOver;
 	
 	public String getId() {
 		return id;
@@ -79,6 +80,14 @@ public class Game {
 
 	public void setPassCounter(int passCounter) {
 		this.passCounter = passCounter;
+	}
+
+	public Boolean getIsBetTurnOver() {
+		return isBetTurnOver;
+	}
+
+	public void setIsBetTurnOver(Boolean isBetTurnOver) {
+		this.isBetTurnOver = isBetTurnOver;
 	}
 
 
