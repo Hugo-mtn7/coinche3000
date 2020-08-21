@@ -34,10 +34,15 @@ public class BetService {
 					if(bet.getValue() == Constants.PASS) {
 						if(isLastBet(game, currentBet)) {
 							//End bet turn
+							if (currentBet == null) {
+								roundService.restartRound(game);
+							}
+							else {
 							game.setIsBetTurnOver(true);
 							game.setPassCounter(0);
 							game.setCurrentPlayer(gameService.getPlayerPseudoFromPosition(
 									game, CommonService.getNextPosition(game.getCurrentDealerPosition())));
+							}
 							gameService.saveGame(game);
 							return game;
 						}

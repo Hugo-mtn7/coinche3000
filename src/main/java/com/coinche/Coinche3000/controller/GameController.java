@@ -16,7 +16,9 @@ import org.springframework.web.server.ResponseStatusException;
 import com.coinche.Coinche3000.exception.NotFoundException;
 import com.coinche.Coinche3000.object.Game;
 import com.coinche.Coinche3000.object.Player;
+import com.coinche.Coinche3000.repository.GameRepository;
 import com.coinche.Coinche3000.service.GameService;
+import com.coinche.Coinche3000.service.RoundService;
 
 @RestController()
 @RequestMapping("game")
@@ -24,6 +26,11 @@ public class GameController {
 
 	@Autowired
 	GameService gameService;
+	
+	@Autowired
+	RoundService roundService;
+	@Autowired
+	GameRepository gameRepository;
 	
 	@CrossOrigin
 	@PostMapping("/create-new/{scoringLimit}")
@@ -67,6 +74,46 @@ public class GameController {
 	public List<Game> getAll() {
 			
 		return gameService.getAll();
+	}
+	
+	@PostMapping("/check-changes/{gameId}")
+	public Game checkChanges(@PathVariable Integer gameId, @RequestBody String waitingPlayerPseudo ) {
+		
+		try {
+			return gameService.checkChanges(gameId, waitingPlayerPseudo);		
+		} catch (NotFoundException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+			ResponseStatusException ex = new ResponseStatusException(
+			           HttpStatus.NOT_FOUND, "Game not found", e);
+			throw ex;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	@GetMapping("/restart-round/{gameId}")
+	public Game restartRound(@PathVariable Integer gameId ) {
+		Game game;
+		try {
+			game = gameService.getGameById(gameId);
+			roundService.restartRound(game);
+			gameRepository.save(game);
+			return game;
+		} catch (NotFoundException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+			ResponseStatusException ex = new ResponseStatusException(
+			           HttpStatus.NOT_FOUND, "Game not found", e);
+			throw ex;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+		
 	}
 	
 	@CrossOrigin

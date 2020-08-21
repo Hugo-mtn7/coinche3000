@@ -186,6 +186,15 @@ public class GameService {
 		return null;
 	}
 
+	public Game checkChanges(Integer gameId, String waitingPlayerPseudo) throws NotFoundException, Exception {
+
+		Game game = getGameById(gameId);
+		
+		if (game.getCurrentPlayer().equals(waitingPlayerPseudo))
+			return null;
+		else
+			return game;
+	}
 //	public void displayGame() {
 //		System.out.println("Game id : " + game.getId());
 //		System.out.println("Scoring limit : " + game.getScoringLimit());
